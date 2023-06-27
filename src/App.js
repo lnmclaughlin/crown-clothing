@@ -5,6 +5,7 @@ import Home from "./routes/home/Home";
 import Navigation from "./routes/navigation/Navigation";
 import Authentication from "./routes/authentication/Authentication";
 import Shop from "./routes/shop/Shop";
+import Checkout from "./routes/checkout/Checkout";
 
 const App = () => {
   const { currentUser } = useContext(UserContext);
@@ -20,6 +21,7 @@ const App = () => {
             currentUser ? <Navigate to="/" replace /> : <Authentication />
           }
         />
+        <Route path="checkout" element={<Checkout />} />
       </Route>
     </Routes>
   );
