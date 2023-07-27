@@ -59,7 +59,7 @@ const SignInForm = () => {
 
   return (
     <SignInContainer>
-      <SignInPrompt>Already have an account?</SignInPrompt>
+      <h2>Already have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput

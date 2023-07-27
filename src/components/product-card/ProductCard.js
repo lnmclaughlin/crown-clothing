@@ -3,7 +3,6 @@ import { CartContext } from "../../context/CartContext";
 import Button from "../button/Button";
 import {
   ProductCardContainer,
-  ProductImg,
   Footer,
   Name,
   Price,
@@ -17,7 +16,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <ProductCardContainer>
-      <ProductImg src={imageUrl} alt={`${name}`} />
+      <img src={imageUrl} alt={`${name}`} />
       <Footer>
         <Name>{name}</Name>
         <Price>{price}</Price>
