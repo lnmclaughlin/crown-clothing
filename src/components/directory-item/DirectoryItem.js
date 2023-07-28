@@ -7,7 +7,7 @@ import {
 } from "./directory-item.styles.js";
 
 const DirectoryItem = ({ category }) => {
-  const { imageUrl, title, route } = category;
+  const { imageUrl, title } = category;
 
   return (
     <DirectoryItemContainer>
