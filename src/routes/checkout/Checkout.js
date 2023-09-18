@@ -6,7 +6,6 @@ import {
   CheckoutContainer,
   CheckoutHeader,
   HeaderBlock,
-  Heading,
   Total,
 } from "./checkout.styles.js";
 
