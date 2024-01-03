@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 import { createAction } from "../utils/firebase/reducer/reducer.utils";
 
 const addCartItem = (cartItems, productToAdd) => {
@@ -56,6 +56,11 @@ const cartReducer = (state, action) => {
         ...state,
         ...payload,
       };
+    case CART_ACTION_TYPES.SET_IS_CART_OPEN:
+      return {
+        ...state,
+        isCartOpen: payload,
+      };
 
     default:
       throw new Error(`unhandled type of ${type} in cartReducer`);
@@ -77,31 +82,27 @@ export const CartContext = createContext({
 });
 
 export const CartProvider = ({ children }) => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [{ cartCount, isCartOpen, cartTotal, cartItems }, dispatch] =
+    useReducer(cartReducer, INITIAL_STATE);
 
-  const [{ cartCount, cartTotal, cartItems }, dispatch] = useReducer(
-    cartReducer,
-    INITIAL_STATE
-  );
-
-  const updateCartItemsReducer = (cartItems) => {
-    const newCartCount = cartItems.reduce(
+  const updateCartItemsReducer = (newCartItems) => {
+    const newCartCount = newCartItems.reduce(
       (total, cartItem) => total + cartItem.quantity,
       0
     );
 
-    const newCartTotal = cartItems.reduce(
+    const newCartTotal = newCartItems.reduce(
       (total, cartItem) => total + cartItem.quantity * cartItem.price,
       0
     );
 
-    const payload = {
-      cartItems,
-      cartCount: newCartCount,
-      cartTotal: newCartTotal,
-    };
-
-    dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEMS, payload));
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
+        cartItems: newCartItems,
+        cartCount: newCartCount,
+        cartTotal: newCartTotal,
+      })
+    );
   };
 
   const addItemToCart = (productToAdd) => {
@@ -117,6 +118,10 @@ export const CartProvider = ({ children }) => {
   const clearItemFromCart = (cartItemToClear) => {
     const newCartItems = clearCartItem(cartItems, cartItemToClear);
     updateCartItemsReducer(newCartItems);
+  };
+
+  const setIsCartOpen = (bool) => {
+    dispatch(createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, bool));
   };
 
   const value = {
