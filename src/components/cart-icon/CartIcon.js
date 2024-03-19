@@ -6,7 +6,6 @@ import {
 import { setIsCartOpen } from "../../store/cart/cartAction";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 import "./cart-icon.styles.js";
-
 import { CartIconContainer, ItemCount } from "./cart-icon.styles.js";
 
 const CartIcon = () => {
